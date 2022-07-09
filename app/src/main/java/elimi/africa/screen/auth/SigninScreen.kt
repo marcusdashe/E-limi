@@ -25,7 +25,7 @@ import elimi.africa.R
 import elimi.africa.navigation.Screen
 
 @Composable
-fun SigniinScreen(navController: NavHostController) {
+fun SigninScreen(navController: NavHostController) {
 
     ElimiTheme {
         Surface(
@@ -133,7 +133,7 @@ fun SigniinScreen(navController: NavHostController) {
                     }
 
                     Button(
-                        onClick = {},
+                        onClick = {navController.navigate(Screen.Login.route)},
                         colors = ButtonDefaults.buttonColors(
                             backgroundColor = Color(0xFF8D161A),
                             contentColor = Color.White

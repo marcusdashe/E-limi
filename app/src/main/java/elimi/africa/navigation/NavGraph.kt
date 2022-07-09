@@ -8,8 +8,10 @@ import androidx.navigation.compose.composable
 import com.google.accompanist.pager.ExperimentalPagerApi
 import elimi.africa.screen.AnimatedSplashScreen
 import elimi.africa.screen.HomeScreen
+import elimi.africa.screen.ProfileScreen
 import elimi.africa.screen.WelcomeScreen
-import elimi.africa.screen.auth.SigniinScreen
+import elimi.africa.screen.auth.LoginScreen
+import elimi.africa.screen.auth.SigninScreen
 import elimi.africa.screen.auth.SignupScreen
 
 @ExperimentalAnimationApi
@@ -31,13 +33,22 @@ fun SetupNavGraph(
             AnimatedSplashScreen(navController = navController)
         }
 
-        composable(route = Screen.Login.route){
-            SigniinScreen(navController = navController)
+        composable(route = Screen.Signin.route){
+            SigninScreen(navController = navController)
         }
 
         composable(route = Screen.Signup.route){
             SignupScreen(navController = navController)
         }
+
+        composable(route = Screen.Login.route){
+            LoginScreen(navController = navController )
+        }
+
+        composable(route = Screen.Profile.route){
+            ProfileScreen(navController = navController)
+        }
+
         composable(route = Screen.Home.route){
             HomeScreen()
         }

@@ -1,20 +1,16 @@
 package elimi.africa.screen.auth
 
-
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -22,26 +18,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import elimi.africa.R
 import elimi.africa.navigation.Screen
 import elimi.africa.ui.theme.ElimiTheme
 
+
 @Composable
-fun SignupScreen(navController: NavHostController) {
+fun LoginScreen(navController : NavHostController){
 
     val emailValue = remember { mutableStateOf("") }
     val passwordValue = remember { mutableStateOf("") }
-    val confirmPasswordValue = remember { mutableStateOf("") }
 
     val passwordVisibility = remember { mutableStateOf(false) }
-    val confirmPasswordVisibility = remember { mutableStateOf(false) }
 
     val rememberState = remember { mutableStateOf(false ) }
 
@@ -57,7 +49,7 @@ fun SignupScreen(navController: NavHostController) {
                     .padding(horizontal = 15.dp, vertical = 20.dp)
             ){
                 ConstraintLayout {
-                    val ( heading, fields, remember, btns, continua, tiny, login) = createRefs()
+                    val ( heading, fields, remember, btns, continua, tiny, login, forgot) = createRefs()
                     val guideLine = createGuidelineFromTop(0.1f)
 
                     Row(
@@ -68,7 +60,7 @@ fun SignupScreen(navController: NavHostController) {
                             .height(60.dp)
                             .padding(start = 10.dp),
 
-                    ){
+                        ){
                         Image(
                             painterResource(id = R.drawable.back_icon),
                             contentDescription = "",
@@ -82,17 +74,17 @@ fun SignupScreen(navController: NavHostController) {
                     }
 
                     Column(horizontalAlignment = Alignment.Start,
-                            verticalArrangement = Arrangement.Bottom,
-                            modifier = Modifier
-                                .fillMaxWidth(0.9f)
-                                .constrainAs(heading) {
-                                    top.linkTo(guideLine, margin = 28.dp)
-                                    start.linkTo(parent.start)
-                                    end.linkTo(parent.end)
-                                }
-                        ){
+                        verticalArrangement = Arrangement.Bottom,
+                        modifier = Modifier
+                            .fillMaxWidth(0.9f)
+                            .constrainAs(heading) {
+                                top.linkTo(guideLine, margin = 28.dp)
+                                start.linkTo(parent.start)
+                                end.linkTo(parent.end)
+                            }
+                    ){
                         Text(
-                            text = "Create an Account",
+                            text = "Welcome back!",
                             textAlign = TextAlign.Start,
                             color = Color.Black,
                             fontSize = 28.sp,
@@ -134,7 +126,7 @@ fun SignupScreen(navController: NavHostController) {
                                     Icon(painter = painterResource(id = R.drawable.ic_baseline_email_24),
                                         contentDescription = "Email Icon",
                                         tint = Color.LightGray
-                                        )
+                                    )
                                 }
                             }
                         )
@@ -155,7 +147,7 @@ fun SignupScreen(navController: NavHostController) {
                                 unfocusedIndicatorColor = Color.Transparent,
                                 disabledIndicatorColor = Color.Transparent,
                                 backgroundColor = Color(0x128D161A)),
-                                leadingIcon = {
+                            leadingIcon = {
                                 IconButton(onClick = {}){
                                     Icon(painter = painterResource(id = R.drawable.ic_baseline_lock_24),
                                         contentDescription = "Password Icon Lock",
@@ -175,55 +167,26 @@ fun SignupScreen(navController: NavHostController) {
                             else PasswordVisualTransformation()
                         )
 
-
-                        TextField(
-                            value = confirmPasswordValue.value,
-                            onValueChange = { confirmPasswordValue.value = it },
-                            label = { Text(text = "Confirm Password")},
-                            placeholder = { Text(text= "Confirm Password")},
-                            singleLine = true,
-                            modifier = Modifier.fillMaxWidth().scale(scaleY = 0.9F, scaleX = 1F),
-                            shape = RoundedCornerShape(15.dp),
-                            colors = TextFieldDefaults.textFieldColors(
-                                textColor = Color.LightGray,
-                                disabledTextColor = Color.Transparent,
-                                focusedIndicatorColor = Color.Transparent,
-                                unfocusedIndicatorColor = Color.Transparent,
-                                disabledIndicatorColor = Color.Transparent,
-                                backgroundColor = Color(0x128D161A)),
-                            trailingIcon = {
-                                IconButton(onClick = { confirmPasswordVisibility.value = !confirmPasswordVisibility.value })  {
-                                    Icon(painter = painterResource(id = R.drawable.ic_baseline_remove_red_eye_24),
-                                        contentDescription = "Password Icon Eye",
-                                        tint = if(confirmPasswordVisibility.value) Color.Black else Color.Gray
-                                    )
-                                }
-                            },
-                            visualTransformation = if(confirmPasswordVisibility.value) VisualTransformation.None
-                            else PasswordVisualTransformation()
-
-                        )
-
                     }
 
                     Row(
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.constrainAs(remember){
-                        top.linkTo(fields.bottom, margin = 5.dp)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                    }) {
+                            top.linkTo(fields.bottom, margin = 5.dp)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                        }) {
                         Checkbox(
                             colors = CheckboxDefaults.colors(Color(0xFF8D161A)),
                             checked = rememberState.value,
                             modifier = Modifier.padding(5.dp),
                             onCheckedChange ={ rememberState.value = it} )
-                            Text(text = "Remember me", modifier = Modifier.padding(0.dp))
+                        Text(text = "Remember me", modifier = Modifier.padding(0.dp))
                     }
 
                     Button(
-                        onClick = {},
+                        onClick = { authenticate(navController) },
                         colors = ButtonDefaults.buttonColors(
                             backgroundColor = Color(0xFF8D161A),
                             contentColor = Color.White
@@ -238,8 +201,22 @@ fun SignupScreen(navController: NavHostController) {
                                 end.linkTo(parent.end)
                             }
                     ){
-                        Text(text="Sign up")
+                        Text(text="Login")
                     }
+
+                    Text(
+                        text="Forgot Password", color = Color(0xFF8D161A),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .constrainAs(forgot) {
+                                top.linkTo(btns.bottom, margin = 5.dp)
+                                start.linkTo(parent.start)
+                                end.linkTo(parent.end)
+                            }
+                            .clickable{
+                        navController.navigate(Screen.Login.route) }
+                    )
 
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -247,7 +224,7 @@ fun SignupScreen(navController: NavHostController) {
                         modifier = Modifier
                             .fillMaxWidth(.9f)
                             .constrainAs(continua) {
-                                top.linkTo(btns.bottom, margin = 15.dp)
+                                top.linkTo(forgot.bottom, margin = 15.dp)
                                 start.linkTo(parent.start)
                                 end.linkTo(parent.end)
                             }){
@@ -272,10 +249,10 @@ fun SignupScreen(navController: NavHostController) {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
                         modifier = Modifier.fillMaxWidth(0.9f).constrainAs(tiny) {
-                        top.linkTo(continua.bottom, margin = 12.dp)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                    }){
+                            top.linkTo(continua.bottom, margin = 12.dp)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                        }){
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center,
@@ -284,13 +261,13 @@ fun SignupScreen(navController: NavHostController) {
                                 .fillMaxWidth()
                         ){
 
-                            Carder( icon = R.drawable.ic_icons8_facebook_circled__1_){
+                            RowLayer( icon = R.drawable.ic_icons8_facebook_circled__1_){
                                 println("Facebook Login")
                             }
-                            Carder( icon =  R.drawable.ic_icons8_google){
+                            RowLayer( icon =  R.drawable.ic_icons8_google){
                                 println("Gmail Login")
                             }
-                            Carder(  icon = R.drawable.ic_icons8_apple_logo){
+                            RowLayer(  icon = R.drawable.ic_icons8_apple_logo){
                                 println("Apple Login")
                             }
                         }
@@ -304,9 +281,9 @@ fun SignupScreen(navController: NavHostController) {
                             start.linkTo(parent.start)
                             end.linkTo(parent.end)
                         }){
-                        Text(text= "Already have account? ")
-                        Text(text="Login", color = Color(0xFF8D161A), modifier = Modifier.clickable{
-                            navController.navigate(Screen.Login.route) })
+                        Text(text= "Don't have an account? ")
+                        Text(text="Sign up", color = Color(0xFF8D161A), modifier = Modifier.clickable{
+                            navController.navigate(Screen.Signup.route) })
                     }
 
                 }
@@ -314,12 +291,17 @@ fun SignupScreen(navController: NavHostController) {
         }
 
     }
+
+}
+
+fun authenticate(navController: NavHostController) {
+    navController.navigate(Screen.Profile.route)
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun Carder(icon: Int, onClick: () -> Unit){
+fun RowLayer(icon: Int, onClick: () -> Unit){
     Card(
         onClick = onClick,
         shape = RoundedCornerShape(5.dp),
@@ -332,16 +314,7 @@ fun Carder(icon: Int, onClick: () -> Unit){
     ){
         Icon(painter = painterResource(id = icon), contentDescription = null, modifier = Modifier.size(50.dp).fillMaxWidth(.8f))
 
-
     }
 }
 
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun DefaultPreview(){
-    val navController = rememberNavController()
-    ElimiTheme {
-        SignupScreen(navController)
-    }
-}
